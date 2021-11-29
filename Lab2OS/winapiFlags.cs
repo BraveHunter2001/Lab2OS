@@ -193,4 +193,8 @@ namespace winapiFlags
 		PROCESSOR_ARCHITECTURE_UNKNOWN = 0xFFFF
 	}
 
+	
+	
+
+
 }

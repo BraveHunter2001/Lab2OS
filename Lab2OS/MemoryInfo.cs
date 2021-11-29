@@ -46,5 +46,30 @@ namespace Lab2OS
             Console.WriteLine($"Maximum accessible memory: {sysInfo.lpMaximumApplicationAddress}");
             Console.WriteLine($"Allocation granularity: {sysInfo.dwAllocationGranularity}");
         }
+
+        public void PrintGlobalMemoryStatus()
+        {
+            MEMORYSTATUSEX ms = new MEMORYSTATUSEX();
+            if (!GlobalMemoryStatusEx(ms))
+            {
+                uint err;
+                err = GetLastError();
+                if (err != 0)
+                {
+                    Console.WriteLine($"ERROR. CODE:{err}");
+                    return;
+                }
+                return;
+            }
+
+
+            Console.WriteLine($"Mem load: {ms.dwMemoryLoad} %");
+            Console.WriteLine($"Total Physical:{ms.ullTotalPhys/ (1024 * 1024)} mb ");
+            Console.WriteLine($"Available Physical: {ms.ullAvailPhys / (1024 * 1024)} mb");
+            Console.WriteLine($"Total Page File: {ms.ullTotalPageFile / (1024 * 1024)} mb");
+            Console.WriteLine($"Available Page File: {ms.ullAvailPageFile / (1024 * 1024)} mb");
+            Console.WriteLine($"Total Virtual: {ms.ullTotalVirtual / (1024 * 1024)} mb");
+            Console.WriteLine($"Available Virtual: {ms.ullAvailVirtual / (1024*1024)} mb");
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Lab2OS
         {
             MemoryInfo memInfo = new MemoryInfo();
             memInfo.PrintSystemInfo();
+            Console.WriteLine("");
+            memInfo.PrintGlobalMemoryStatus();
             Console.ReadLine();
         }
     }
