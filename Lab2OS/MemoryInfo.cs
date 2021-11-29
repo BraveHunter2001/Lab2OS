@@ -22,7 +22,7 @@ namespace Lab2OS
         
         #endregion
 
-        public void PrintSystemInfo()
+        protected void PrintSystemInfo()
         {
             GetSystemInfo(out SYSTEM_INFO_WCE50 sysInfo);
 
@@ -47,7 +47,7 @@ namespace Lab2OS
             Console.WriteLine($"Allocation granularity: {sysInfo.dwAllocationGranularity}");
         }
 
-        public void PrintGlobalMemoryStatus()
+        protected void PrintGlobalMemoryStatus()
         {
             MEMORYSTATUSEX ms = new MEMORYSTATUSEX();
             if (!GlobalMemoryStatusEx(ms))
@@ -71,5 +71,7 @@ namespace Lab2OS
             Console.WriteLine($"Total Virtual: {ms.ullTotalVirtual / (1024 * 1024)} mb");
             Console.WriteLine($"Available Virtual: {ms.ullAvailVirtual / (1024*1024)} mb");
         }
+
+
     }
 }

@@ -193,8 +193,73 @@ namespace winapiFlags
 		PROCESSOR_ARCHITECTURE_UNKNOWN = 0xFFFF
 	}
 
-	
-	
 
 
+	[StructLayout(LayoutKind.Sequential)]
+	public struct MEMORY_BASIC_INFORMATION
+	{
+		public IntPtr baseAddress;
+		public IntPtr allocationBase;
+		public uint allocationProtect;
+		public IntPtr regionSize;
+		public uint state;
+		public uint protect;
+		public uint lType;
+	}
+
+
+	public enum MEM_ALLOCATION_PROTECT : uint
+	{
+		NO_ACCESS = 0,
+		PAGE_EXECUTE = 0x00000010,
+		PAGE_EXECUTE_READ = 0x00000020,
+		PAGE_EXECUTE_READWRITE = 0x00000040,
+		PAGE_EXECUTE_WRITECOPY = 0x00000080,
+		PAGE_NOACCESS = 0x00000001,
+		PAGE_READONLY = 0x00000002,
+		PAGE_READWRITE = 0x00000004,
+		PAGE_WRITECOPY = 0x00000008,
+		PAGE_GUARD = 0x00000100,
+		PAGE_NOCACHE = 0x00000200,
+		PAGE_WRITECOMBINE = 0x00000400
+	}
+
+	public enum MEM_TYPE : uint
+	{
+		MEM_IMAGE = 0x1000000,
+		MEM_MAPPED = 0x40000,
+		MEM_PRIVATE = 0x20000
+	}
+
+	public enum MEM_STATE : uint
+	{
+		MEM_COMMIT = 0x1000,
+		MEM_FREE = 0x10000,
+		MEM_RESERVE = 0x2000,
+	}
+	public enum MEM_FREE_TYPE : uint
+	{
+		MEM_DECOMMIT = 0x00004000,
+		MEM_RELEASE = 0x00008000,
+		
+		MEM_COALESCE_PLACEHOLDERS = 0x00000001,
+		
+		MEM_PRESERVE_PLACEHOLDER = 0x00000002
+	}
+
+	public enum MemoryProtection
+	{
+		NoAccess = 0x01,
+		ReadOnly = 0x02,
+		ReadWrite = 0x04,
+		WriteCopy = 0x08,
+		Execute = 0x10,
+		ExecuteRead = 0x20,
+		ExecuteReadWrite = 0x40,
+		ExecuteWriteCopy = 0x80,
+		GuardModifierflag = 0x100,
+		NoCacheModifierflag = 0x200,
+		WriteCombineModifierflag = 0x400,
+		TargetsInvalid = 0x40000000
+	}
 }

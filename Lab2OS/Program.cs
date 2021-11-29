@@ -10,10 +10,11 @@ namespace Lab2OS
     {
         static void Main(string[] args)
         {
-            MemoryInfo memInfo = new MemoryInfo();
-            memInfo.PrintSystemInfo();
-            Console.WriteLine("");
-            memInfo.PrintGlobalMemoryStatus();
+            MemRegionManager mem = new MemRegionManager();
+            mem.ReserveVirtualAuto();
+            mem.DetermineStateSegMem();
+            mem.FreeRegion();
+          
             Console.ReadLine();
         }
     }

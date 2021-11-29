@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Helper.cs" />
     <Compile Include="MemoryInfo.cs" />
+    <Compile Include="MemRegionManager.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
