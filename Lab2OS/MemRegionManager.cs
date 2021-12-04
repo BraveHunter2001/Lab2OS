@@ -15,7 +15,7 @@ namespace Lab2OS
 		[DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
 		protected static extern IntPtr VirtualQuery(IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, IntPtr dwLength);
 
-		[DllImport("kernel32")]
+		[DllImport("kernel32", CallingConvention = CallingConvention.Winapi, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
 
 		[DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true, ExactSpelling = true)]
@@ -35,7 +35,6 @@ namespace Lab2OS
 			{
 				if (hex.StartsWith("0x"))
 					hex = hex.Substring(2);
-				result = Convert.ToUInt64(hex, 16);
 				return true;
 			}
 			catch (Exception)
@@ -43,7 +42,6 @@ namespace Lab2OS
 				return false;
 			}
 		}
-
 
 		protected ulong ConsoleReadHex()
 		{
@@ -61,8 +59,8 @@ namespace Lab2OS
 			if ( (int)VirtualQuery((IntPtr)addr, out buffer, (IntPtr)Marshal.SizeOf(buffer)) != 0  )
 			{
                 Console.WriteLine($"AllocBase: {buffer.allocationBase}");
-                Console.WriteLine($"AllocProtect: {buffer.allocationProtect}");
-                Console.WriteLine($"Base address: {(MEM_ALLOCATION_PROTECT)buffer.baseAddress}");
+                Console.WriteLine($"AllocProtect: {(MEM_ALLOCATION_PROTECT)buffer.allocationProtect}");
+                Console.WriteLine($"Base address: {buffer.baseAddress}");
                 Console.WriteLine($"Region size: {buffer.regionSize}");
                 Console.WriteLine($"State: {(MEM_STATE)buffer.state}");
                 Console.WriteLine($"Type: {(MEM_TYPE)buffer.lType}");
@@ -88,6 +86,20 @@ namespace Lab2OS
 			}
 		}
 
+		public void ProtectRegion(MemoryProtection memoryProtectionLevel)
+		{
+			ulong addr = ConsoleReadHex();
+			uint oldProtect = 0;
+			if (VirtualProtect((IntPtr)addr, 4, (uint)memoryProtectionLevel, out oldProtect))
+				Console.WriteLine($"Memory protection level changed successfully! Old protection level: {(MemoryProtection)oldProtect}");
+			else
+			{
+				uint err = GetLastError();
+				Console.WriteLine("Error occured." + (err != 0 ? $" Error code : {err}" : ""));
+			}
+		}
+
+
 		bool AllocRegion(out IntPtr basicAddr, bool automatic = true, bool physical = false)
 		{
 			GetSystemInfo(out SYSTEM_INFO_WCE50 info);
@@ -98,6 +110,7 @@ namespace Lab2OS
 			if (physical)
 				memst |= (uint)MEM_STATE.MEM_COMMIT;
             
+			
 
 			basicAddr = VirtualAlloc((IntPtr)addr, info.dwPageSize,
 				memst, (uint)MEM_ALLOCATION_PROTECT.PAGE_EXECUTE_READWRITE);

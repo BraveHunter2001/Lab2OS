@@ -71,7 +71,7 @@ namespace Lab2OS
 		public IMenu GetPreviousMenu() => PreviousMenu;
 
 		readonly string selectAgainText = "Incorrect input. Try again.",
-			selectText = "Please select option using number in range [FROM, TO]:",
+			selectText = "Please select option using number in range:",
 			toPrevMenuText = "Return to previous menu",
 			exitText = "Exit";
 
@@ -84,7 +84,7 @@ namespace Lab2OS
 			var items = new IMenuItem[values.Length];
 			for (int i = 0; i < values.Length; i++)
 			{
-				T val = values[i]; //so the delegate wont corrupt
+				T val = values[i];
 				items[i] = new MenuItem(values[i].ToString(), () => itemSelectFunction(val));
 			}
 			return new Menu(header, items);

@@ -207,7 +207,7 @@ namespace winapiFlags
 		public uint lType;
 	}
 
-
+	[Flags]
 	public enum MEM_ALLOCATION_PROTECT : uint
 	{
 		NO_ACCESS = 0,

@@ -22,7 +22,7 @@ namespace Lab2OS
         
         #endregion
 
-        protected void PrintSystemInfo()
+        public void PrintSystemInfo()
         {
             GetSystemInfo(out SYSTEM_INFO_WCE50 sysInfo);
 
@@ -47,7 +47,7 @@ namespace Lab2OS
             Console.WriteLine($"Allocation granularity: {sysInfo.dwAllocationGranularity}");
         }
 
-        protected void PrintGlobalMemoryStatus()
+        public void PrintGlobalMemoryStatus()
         {
             MEMORYSTATUSEX ms = new MEMORYSTATUSEX();
             if (!GlobalMemoryStatusEx(ms))
